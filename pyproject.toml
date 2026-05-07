@@ -1,0 +1,14 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "creator-outreach-core"
+version = "0.1.0"
+description = "Shared SQLite CRM for multi-platform creator BD outreach agents"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/creator_outreach_core"]
