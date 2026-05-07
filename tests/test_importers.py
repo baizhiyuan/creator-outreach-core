@@ -11,10 +11,12 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 from creator_outreach_core.db import connect, init_schema, close
 from creator_outreach_core.importers import import_targets_csv, _stable_id
 
-# Real Instagram targets CSV used as import fixture
-# tests/ is at project root/tests/, so parents[1] is the repo root,
-# and the IG agent lives two levels up at /Users/expansioai/project/instagram-collab-agent
-IG_CSV = Path("/Users/expansioai/project/instagram-collab-agent/data/targets.csv")
+# Real Instagram targets CSV used as import fixture.
+# The IG agent renamed `data/targets.csv` → `data/targets.csv.deprecated-audit`
+# in CDM-IG-2 (2026-05-07) when its live CRM moved into a creator-outreach-core
+# SQLite DB. The deprecated-audit file is preserved as the canonical seed
+# fixture for these tests.
+IG_CSV = Path("/Users/expansioai/project/instagram-collab-agent/data/targets.csv.deprecated-audit")
 
 
 def _tmp_conn():

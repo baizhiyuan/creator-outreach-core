@@ -3,10 +3,27 @@
 Shared SQLite CRM data layer for the three multi-platform creator BD agent projects:
 `instagram-collab-agent`, `tiktok-collab-agent`, and `x-collab-agent`.
 
-Each platform agent maintains its own `data/targets.csv`; this library provides a
-unified SQLite backend that imports those CSVs, deduplicates by `(platform, handle)`,
-scores creators, manages a suppression list, and records outreach events. It implements
-spec §3 P1 of the multi-platform creator BD agent upgrade plan.
+> **Production status (2026-05-07)**: live in all 3 BD agents
+> ([instagram-collab-agent](https://github.com/baizhiyuan/instagram-collab-agent),
+> [tiktok-collab-agent](https://github.com/baizhiyuan/tiktok-collab-agent),
+> [x-collab-agent](https://github.com/baizhiyuan/x-collab-agent)). Each
+> agent depends on this library via `requirements.txt`
+> (`-e ../creator-outreach-core`) and routes every CRM status transition
+> through `events.record_event()`. The original per-repo
+> `data/targets.csv` / `data/suppression.csv` files have been renamed to
+> `*.deprecated-audit` (audit anchors, not deleted) and replaced by a
+> creator-outreach-core SQLite DB at `data/creator_outreach.db` in each
+> agent. Repo visibility was flipped from PRIVATE to PUBLIC on 2026-05-07
+> to support cross-repo CI sibling-clone in the BD agents' GitHub Actions
+> workflows (`git clone --depth 1 ../creator-outreach-core`). See per-agent
+> CDM-{ig,tt,x}-{0..3} commits for the migration trail.
+
+Each platform agent now maintains a live `data/creator_outreach.db` SQLite
+store (gitignored) plus an audit-only `data/targets.csv.deprecated-audit`;
+this library provides the unified SQLite backend that seeds creators from
+the audit CSVs on first run, deduplicates by `(platform, handle)`, scores
+creators, manages a suppression list, and records outreach events. It
+implements spec §3 P1 of the multi-platform creator BD agent upgrade plan.
 
 Runtime dependencies: **stdlib only** (`sqlite3`, `dataclasses`, `pathlib`, `json`, `hashlib`).
 Python >= 3.11 required.

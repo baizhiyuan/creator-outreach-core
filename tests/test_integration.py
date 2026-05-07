@@ -17,7 +17,9 @@ from creator_outreach_core.scoring import score_creator
 from creator_outreach_core.suppression import add_suppression, is_suppressed
 from creator_outreach_core.events import record_event, get_latest_event
 
-IG_CSV = Path("/Users/expansioai/project/instagram-collab-agent/data/targets.csv")
+# IG agent renamed `data/targets.csv` → `data/targets.csv.deprecated-audit`
+# in CDM-IG-2 when its live CRM moved into a creator-outreach-core SQLite DB.
+IG_CSV = Path("/Users/expansioai/project/instagram-collab-agent/data/targets.csv.deprecated-audit")
 
 
 def _tmp_conn():
